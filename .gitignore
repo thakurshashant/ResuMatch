@@ -1,0 +1,7 @@
+# Ignore Python bytecode files
+
+venv/
+__pycache__/
+*.pyc
+*.log
+.DS_Store

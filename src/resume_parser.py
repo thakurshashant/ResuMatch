@@ -1,35 +1,35 @@
-import pdfplumber 
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-def extract_text_from_pdf(file_path):
-    text = ""
-    with pdfplumber.open(file_path) as pdf:
-        for page in pdf.pages:
-            page_text = page.extract_text()
-            if page_text:
-                text += page_text + "\n"
-    return text
-
-
-def identification_keyboard(extracted_text):
-    keywords = [ "Python", "Machine Learning", "Bachelor", "Master", "AWS", "React"]
-    keywords_founded = []
-
-    words = extracted_text.split()
-
-    for word in words:
-        if word in keywords:
-            keywords_founded.append(word)
-    return keywords_founded
-
-
-
+from utils.text_extraction import extract_text_from_pdf, read_jd_from_file
+from utils.skills_matching import (
+    extracting_skills,
+    identification_keywords,
+    extract_skills_from_jd,
+    comparison_logic,
+)
 
 
 
 if __name__ == "__main__":
-    file_path = "data/Shashant_Thakur.pdf"
-    extracted_text = extract_text_from_pdf(file_path)
-    print(extracted_text)
+    resume_path = "data/Shashant_Thakur.pdf"
+    jd_path = "data/sample_jd.txt"
 
-    identified_keywords = identification_keyboard(extracted_text)
-    print(identified_keywords)
+    extracted_text = extract_text_from_pdf(resume_path).lower()
+    jd_text = read_jd_from_file(jd_path)
+
+    resume_skills = extracting_skills(extracted_text)
+    print("Skills Found:", resume_skills)
+
+    identified_keywords = identification_keywords(extracted_text)
+    print("Identified Keywords:", identified_keywords)
+
+    matched_skills = extract_skills_from_jd(jd_text, resume_skills)
+    print("Matched Skills from JD:", matched_skills)
+
+    matched, missing, match_percent = comparison_logic(resume_skills, matched_skills)
+    print("Comparison Logic Result:")
+    print("Matched Skills:", matched)
+    print("Missing Skills:", missing)
+    print("Match Percentage:", match_percent, "%")
