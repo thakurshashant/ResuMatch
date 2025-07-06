@@ -1,4 +1,3 @@
-
 Minimum qualifications:
 Bachelor's degree or equivalent practical experience.
 Experience working with Unix/Linux environments, distributed systems, machine learning, information retrieval, and TCP/IP.
