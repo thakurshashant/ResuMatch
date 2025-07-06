@@ -3,6 +3,7 @@ import os
 import tempfile
 import time
 
+from utils.similarity import calculate_similarity
 from utils.text_cleaner import clean_text
 from utils.ner_extractor import extract_entities
 from utils.text_extraction import extract_text_from_pdf
@@ -39,9 +40,10 @@ def analyze_resume(resume_file, jd_text):
     keywords = identification_keywords(resume_text)
     matched_skills = extract_skills_from_jd(jd_text_clean, resume_skills)
     matched, missing, match_percent = comparison_logic(resume_skills, matched_skills)
+    similarity_score = calculate_similarity(resume_text, jd_text_clean)
 
     os.remove(tmp_path)  # Cleanup
-    return resume_skills, keywords, entities, matched, missing, match_percent
+    return resume_skills, keywords, entities, matched, missing, match_percent, similarity_score
 
 # ---------------- Run Analysis ----------------
 if st.button("🔍 Analyze Resume"):
@@ -50,11 +52,16 @@ if st.button("🔍 Analyze Resume"):
     else:
         with st.spinner("Analyzing your resume..."):
             time.sleep(1.5)
-            resume_skills, keywords, entities, matched, missing, match_percent = analyze_resume(resume_file, jd_text)
+            resume_skills, keywords, entities, matched, missing, match_percent, similarity_score = analyze_resume(resume_file, jd_text)
 
         st.success("✅ Resume analysis completed!")
 
         # ---------------- Output Section ----------------
+        # 🧠 TF-IDF Similarity Score
+        st.subheader("📐 TF-IDF Similarity Score")
+        st.write(f"🧮 Cosine Similarity: `{similarity_score}%`")
+        st.progress(int(similarity_score))
+        
         st.subheader("🧠 Named Entities Extracted")
         st.write(entities)
 
