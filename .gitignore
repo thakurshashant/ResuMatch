@@ -1,7 +1,6 @@
-# Ignore Python bytecode files
-
-venv/
+# Python + Streamlit project
 __pycache__/
 *.pyc
-*.log
-.DS_Store
+venv/
+temp_*.pdf
+*.DS_Store

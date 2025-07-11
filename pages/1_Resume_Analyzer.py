@@ -1,3 +1,8 @@
+from auth import check_password
+if not check_password():
+    st.stop()
+
+
 import streamlit as st
 import os
 import tempfile

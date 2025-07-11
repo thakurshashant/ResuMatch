@@ -1,3 +1,6 @@
+
+
+
 import re
 # Predefined known skills for comparison
 KNOWN_SKILLS = [
