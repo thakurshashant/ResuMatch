@@ -1,12 +1,8 @@
+import streamlit as st
 from auth import check_password
+
 if not check_password():
     st.stop()
-
-
-
-
-# pages/2_Skill_Extractor.py
-import streamlit as st
 
 st.set_page_config(page_title="Skill Extractor", layout="wide")
 

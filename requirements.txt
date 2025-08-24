@@ -29,7 +29,7 @@ MarkupSafe==3.0.2
 mdurl==0.1.2
 murmurhash==1.0.13
 narwhals==1.45.0
-numpy==2.0.2
+numpy==1.24.4
 packaging==25.0
 pandas==2.2.3
 pdfminer.six==20250327
@@ -51,7 +51,7 @@ requests==2.32.3
 rich==14.0.0
 rpds-py==0.26.0
 scikit-learn==1.6.1
-scipy==1.13.1
+scipy==1.10.1
 shellingham==1.5.4
 six==1.17.0
 smart-open==7.1.0

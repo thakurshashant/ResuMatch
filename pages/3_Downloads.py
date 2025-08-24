@@ -1,11 +1,8 @@
+import streamlit as st
 from auth import check_password
+
 if not check_password():
     st.stop()
-
-
-
-# pages/3_Downloads.py
-import streamlit as st
 
 st.set_page_config(page_title="Download Reports", layout="wide")
 

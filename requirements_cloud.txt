@@ -1,0 +1,9 @@
+streamlit==1.46.1
+pandas==2.2.3
+pdfplumber==0.11.6
+scikit-learn==1.6.1
+spacy==3.8.7
+numpy==1.24.4
+pillow==11.2.1
+requests==2.32.3
+https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl

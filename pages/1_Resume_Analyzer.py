@@ -1,9 +1,9 @@
+import streamlit as st
 from auth import check_password
+
 if not check_password():
     st.stop()
 
-
-import streamlit as st
 import os
 import tempfile
 import time
@@ -38,22 +38,35 @@ with col2:
 
 # Analyzer logic
 def analyze_resume(resume_file, jd_text):
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
-        tmp.write(resume_file.read())
-        tmp_path = tmp.name
+    try:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
+            tmp.write(resume_file.read())
+            tmp_path = tmp.name
 
-    resume_text = clean_text(extract_text_from_pdf(tmp_path))
-    jd_text_clean = clean_text(jd_text)
+        resume_text = clean_text(extract_text_from_pdf(tmp_path))
+        jd_text_clean = clean_text(jd_text)
 
-    entities = extract_entities(resume_text)
-    resume_skills = extracting_skills(resume_text)
-    jd_skills = extracting_skills(jd_text_clean)
-    keywords = identification_keywords(resume_text)
-    matched, missing, match_percent = comparison_logic(resume_skills, jd_skills)
-    similarity_score = calculate_similarity(resume_text, jd_text_clean)
+        entities = extract_entities(resume_text)
+        resume_skills = extracting_skills(resume_text)
+        jd_skills = extracting_skills(jd_text_clean)
+        keywords = identification_keywords(resume_text)
+        matched, missing, match_percent = comparison_logic(resume_skills, jd_skills)
+        similarity_score = calculate_similarity(resume_text, jd_text_clean)
 
-    os.remove(tmp_path)
-    return resume_skills, keywords, entities, matched, missing, match_percent, similarity_score, jd_skills
+        # Clean up temporary file
+        try:
+            os.remove(tmp_path)
+        except:
+            pass  # Ignore cleanup errors
+            
+        return resume_skills, keywords, entities, matched, missing, match_percent, similarity_score, jd_skills
+    except Exception as e:
+        # Clean up temporary file in case of error
+        try:
+            os.remove(tmp_path)
+        except:
+            pass
+        raise e
 
 # Trigger analysis
 st.markdown("---")
