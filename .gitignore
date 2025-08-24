@@ -4,3 +4,4 @@ __pycache__/
 venv/
 temp_*.pdf
 *.DS_Store
+.streamlit/secrets.toml
